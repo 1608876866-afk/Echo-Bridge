@@ -80,10 +80,11 @@ a{color:inherit;text-decoration:none}
 
 /* ===== App Layout ===== */
 #app{display:flex;width:100%;min-height:100vh;position:relative;background:var(--bg)}
-#app::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:var(--texture);opacity:0.5}
+#app::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:var(--texture);opacity:0.6}
+#app::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;background:url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E\");opacity:0.4}
 
 /* ===== Left Navigation ===== */
-.left-nav{position:fixed;left:0;top:0;bottom:0;width:var(--nav-width);background:var(--white);z-index:100;display:flex;flex-direction:column;align-items:center;padding:16px 0;box-shadow:2px 0 20px rgba(0,0,0,0.04);transition:width var(--spring)}
+.left-nav{position:fixed;left:0;top:0;bottom:0;width:var(--nav-width);background:linear-gradient(180deg,var(--white) 0%,var(--card) 100%);z-index:100;display:flex;flex-direction:column;align-items:center;padding:16px 0;box-shadow:2px 0 24px rgba(0,0,0,0.05);transition:width var(--spring)}
 .left-nav:hover{width:var(--nav-width-expanded)}
 @media (max-width:767px){.left-nav{width:120px}.left-nav:hover{width:120px}.nav-item .nav-label{font-size:0.7rem}}
 
@@ -117,10 +118,11 @@ a{color:inherit;text-decoration:none}
 .nav-bottom-btn .nav-label{opacity:1;transition:opacity 0.2s ease}
 
 /* ===== Main Content ===== */
-.main-content{flex:1;margin-left:var(--nav-width);padding:24px 32px 40px;width:calc(100vw - var(--nav-width));transition:margin-left var(--spring)}
-@media (min-width:768px){.main-content{padding:32px 48px 48px}}
-@media (min-width:1400px){.main-content{padding:40px 80px 48px}}
-@media (max-width:767px){.main-content{margin-left:120px;padding:20px 18px 40px;width:calc(100vw - 120px)}}
+.main-content{flex:1;margin-left:var(--nav-width);padding:24px 24px 40px;width:calc(100vw - var(--nav-width));transition:margin-left var(--spring)}
+@media (min-width:768px){.main-content{padding:32px 40px 48px;width:700px;margin-left:calc(var(--nav-width) + (100vw - var(--nav-width) - 700px) / 2)}}
+@media (min-width:1024px){.main-content{padding:36px 48px 48px;width:820px;margin-left:calc(var(--nav-width) + (100vw - var(--nav-width) - 820px) / 2)}}
+@media (min-width:1400px){.main-content{padding:40px 56px 48px;width:900px;margin-left:calc(var(--nav-width) + (100vw - var(--nav-width) - 900px) / 2)}}
+@media (max-width:767px){.main-content{margin-left:120px;padding:20px 16px 40px;width:calc(100vw - 120px)}}
 
 /* ===== Typography ===== */
 h1{font-size:1.6rem;font-weight:600;line-height:1.3;letter-spacing:0.02em}
@@ -130,18 +132,20 @@ p{font-size:0.95rem;color:var(--text-light);line-height:1.7}
 .small{font-size:0.82rem;color:var(--text-lighter)}
 
 /* ===== Cards ===== */
-.card{background:var(--card);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow);transition:box-shadow var(--transition),transform var(--transition);border:1px solid rgba(0,0,0,0.03)}
+.card{background:var(--card);border-radius:var(--radius);padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow);transition:box-shadow 0.35s ease,transform 0.35s ease;border:1px solid rgba(0,0,0,0.04);position:relative}
+.card:hover{box-shadow:0 8px 30px rgba(0,0,0,0.08);transform:translateY(-1px)}
 .card:active{transform:scale(0.985)}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .card-title{font-size:1rem;font-weight:600}
 
 /* ===== Buttons ===== */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 22px;border-radius:50px;font-weight:500;font-size:0.9rem;transition:all var(--spring)}
-.btn:active{transform:scale(0.95)}
-.btn-primary{background:var(--primary);color:var(--white);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
-.btn-secondary{background:var(--white);color:var(--primary-dark);border:1.5px solid var(--primary)}
-.btn-secondary:hover{background:var(--primary-light);color:var(--white)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 22px;border-radius:50px;font-weight:500;font-size:0.9rem;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.12) 0%,transparent 50%);pointer-events:none}
+.btn:active{transform:scale(0.94)}
+.btn-primary{background:var(--primary);color:var(--white);box-shadow:0 4px 14px rgba(0,0,0,0.1)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.btn-secondary{background:var(--white);color:var(--primary-dark);border:1.5px solid var(--primary);box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.btn-secondary:hover{background:var(--primary-light);color:var(--white);transform:translateY(-1px)}
 .btn-warning{background:var(--warning);color:var(--white)}
 .btn-sm{padding:7px 14px;font-size:0.82rem}
 .btn-block{width:100%}
@@ -203,15 +207,21 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(1.2)}
 
 /* ===== Training ===== */
 .energy-wrap{display:flex;align-items:center;gap:14px;padding:8px 0}
-.energy-face{width:44px;height:44px;border-radius:50%;flex-shrink:0;position:relative;transition:all var(--transition)}
-.energy-face .ef-eye{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--text);top:14px;transition:all var(--transition)}
-.energy-face .ef-eye.l{left:12px}.energy-face .ef-eye.r{right:12px}
-.energy-face .ef-mouth{position:absolute;width:16px;height:8px;border-radius:0 0 50% 50%;border-bottom:2.5px solid var(--text);bottom:8px;left:50%;transform:translateX(-50%);transition:all var(--transition)}
-.energy-face.low{background:#F5E6DC}.energy-face.low .ef-eye{height:4px;top:15px}
-.energy-face.low .ef-mouth{width:14px;height:6px;border-radius:50% 50% 0 0;border-bottom:none;border-top:2.5px solid var(--text);bottom:7px}
-.energy-face.mid{background:#F0EBE0}.energy-face.mid .ef-mouth{width:12px;height:0;border-radius:0;border-bottom:2px solid var(--text);bottom:10px}
-.energy-face.high{background:#E8F0E8}.energy-face.high .ef-eye{width:7px;height:9px;border-radius:50% 50% 0 50%;top:12px}
-.energy-face.high .ef-mouth{width:18px;height:10px;border-radius:0 0 50% 50%;border-bottom:3px solid var(--text);bottom:7px}
+.energy-face{width:52px;height:52px;border-radius:50%;flex-shrink:0;position:relative;transition:all 0.5s ease;overflow:hidden}
+.energy-face .ef-eye{position:absolute;width:9px;height:10px;border-radius:50%;background:var(--text);top:16px;transition:all 0.5s ease}
+.energy-face .ef-eye.l{left:14px}.energy-face .ef-eye.r{right:14px}
+.energy-face .ef-blush{position:absolute;width:12px;height:7px;border-radius:50%;top:21px;opacity:0;transition:all 0.5s ease}
+.energy-face .ef-blush.l{left:7px}.energy-face .ef-blush.r{right:7px}
+.energy-face .ef-mouth{position:absolute;height:6px;border-bottom:2.5px solid var(--text);bottom:11px;left:50%;transform:translateX(-50%);transition:all 0.5s ease}
+.energy-face.low{background:linear-gradient(135deg,#F8EDE4,#F2E0D8)}.energy-face.low .ef-eye{width:8px;height:6px;top:18px;border-radius:50%}
+.energy-face.low .ef-blush{opacity:0.3;background:#E8C8B8}
+.energy-face.low .ef-mouth{width:14px;border-bottom:none;border-top:2px solid var(--text);border-radius:40% 40% 0 0;bottom:9px}
+.energy-face.mid{background:linear-gradient(135deg,#F5F0E8,#EDE6DA)}.energy-face.mid .ef-eye{width:9px;height:10px;top:16px}
+.energy-face.mid .ef-blush{opacity:0.3;background:#E0D0C0}
+.energy-face.mid .ef-mouth{width:14px;border-radius:0;bottom:10px}
+.energy-face.high{background:linear-gradient(135deg,#F2F0E8,#E8EDE0)}.energy-face.high .ef-eye{width:8px;height:6px;top:15px;border-radius:50% 50% 50% 0}
+.energy-face.high .ef-blush{opacity:0.6;background:#F0C8B8}
+.energy-face.high .ef-mouth{width:20px;height:10px;border-radius:0 0 50% 50%;border-bottom:3px solid var(--text);bottom:9px}
 .energy-value{font-size:1.4rem;font-weight:700;color:var(--primary-dark);min-width:28px;text-align:center}
 .streak-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);font-size:0.78rem;font-weight:600;color:#D4956A}
 
@@ -491,7 +501,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 <!-- ===== Training ===== -->
 <div id="viewTraining" style="display:none">
   <div class="card"><div class="flex-between mb-6"><span class="card-title">今日社交电量</span><span class="streak-badge" id="streakBadge" style="display:none">连续 0 天</span></div>
-    <div class="energy-wrap"><div class="energy-face mid" id="energyFace"><div class="ef-eye l"></div><div class="ef-eye r"></div><div class="ef-mouth"></div></div><input type="range" min="0" max="10" value="5" id="energySlider"><span class="energy-value" id="energyValue">5</span></div>
+    <div class="energy-wrap"><div class="energy-face mid" id="energyFace"><div class="ef-eye l"></div><div class="ef-eye r"></div><div class="ef-blush l"></div><div class="ef-blush r"></div><div class="ef-mouth"></div></div><input type="range" min="0" max="10" value="5" id="energySlider"><span class="energy-value" id="energyValue">5</span></div>
   </div>
   <div id="tasksWrap"></div>
   <div id="taskDetail" style="display:none" class="card">
@@ -672,21 +682,25 @@ function initTheme(){const d=DB.load();const t=d.settings.theme||'sage';applyThe
 // ==================== NAVIGATION ====================
 let currentView='welcome';
 function applyNavPosition(pos){
-  const app=document.getElementById('app');const nav=document.getElementById('leftNav');
-  if(pos==='bottom'){app.style.flexDirection='column';nav.style.position='fixed';nav.style.bottom='0';nav.style.top='auto';nav.style.left='0';nav.style.right='0';nav.style.width='100%';nav.style.height='56px';nav.style.flexDirection='row';nav.style.padding='0 16px';nav.style.boxShadow='0 -2px 20px rgba(0,0,0,0.04)';
-    document.querySelector('.nav-items').style.flexDirection='row';document.querySelector('.nav-items').style.gap='0';
-    document.querySelector('.nav-avatar-wrap').style.marginBottom='0';document.querySelector('.nav-divider').style.display='none';
-    document.querySelector('.nav-bottom-actions').style.display='none';
-    document.querySelector('.main-content').style.marginLeft='0';document.querySelector('.main-content').style.marginBottom='56px';
-    document.querySelectorAll('.nav-item .nav-label').forEach(l=>l.style.opacity='0');
-    document.querySelectorAll('.nav-item').forEach(i=>i.style.padding='8px 10px');
+  const app=document.getElementById('app');const nav=document.getElementById('leftNav');const mc=document.querySelector('.main-content');
+  const navItems=document.querySelector('.nav-items');const navActions=document.querySelector('.nav-bottom-actions');
+  const avatarWrap=document.querySelector('.nav-avatar-wrap');const divider=document.querySelector('.nav-divider');
+  const labels=document.querySelectorAll('.nav-item .nav-label');const items=document.querySelectorAll('.nav-item');
+  if(pos==='bottom'){
+    app.style.flexDirection='column';mc.style.marginLeft='0';mc.style.marginBottom='60px';mc.style.width='100%';
+    nav.style.cssText='position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:60px;flex-direction:row;padding:0 12px;box-shadow:0 -2px 20px rgba(0,0,0,0.04);justify-content:space-between';
+    navItems.style.cssText='flex-direction:row;gap:0;flex:1;overflow-x:auto';
+    navActions.style.cssText='flex-direction:row;gap:4px;margin-top:0;padding:0 4px;width:auto';
+    avatarWrap.style.cssText='margin-bottom:0;margin-right:8px;display:flex;align-items:center';
+    divider.style.display='none';
+    labels.forEach(l=>l.style.opacity='1');
+    items.forEach(i=>i.style.cssText='padding:6px 10px;flex-direction:column;font-size:0.7rem;white-space:nowrap');
+    document.querySelectorAll('.nav-bottom-btn .nav-label').forEach(l=>l.style.opacity='1');
   }else{
-    app.style.flexDirection='';nav.style.position='fixed';nav.style.bottom='0';nav.style.top='0';nav.style.left='0';nav.style.right='';nav.style.width='var(--nav-width)';nav.style.height='';nav.style.flexDirection='column';nav.style.padding='16px 0';nav.style.boxShadow='2px 0 20px rgba(0,0,0,0.04)';
-    document.querySelector('.nav-items').style.flexDirection='column';document.querySelector('.nav-items').style.gap='4px';
-    document.querySelector('.nav-avatar-wrap').style.marginBottom='24px';document.querySelector('.nav-divider').style.display='';
-    document.querySelector('.nav-bottom-actions').style.display='';
-    document.querySelector('.main-content').style.marginLeft='var(--nav-width)';document.querySelector('.main-content').style.marginBottom='';
-    document.querySelectorAll('.nav-item').forEach(i=>i.style.padding='12px');
+    app.style.flexDirection='';mc.style.marginLeft='';mc.style.marginBottom='';mc.style.width='';
+    nav.style.cssText='';navItems.style.cssText='';navActions.style.cssText='';avatarWrap.style.cssText='';divider.style.display='';
+    labels.forEach(l=>l.style.opacity='');items.forEach(i=>i.style.cssText='');
+    document.querySelectorAll('.nav-bottom-btn .nav-label').forEach(l=>l.style.opacity='');
   }
 }
 function initNavPos(){const d=DB.load();applyNavPosition(d.settings.navPos||'left')}
@@ -1053,26 +1067,28 @@ function renderEmergencyList(){
   c.querySelectorAll('[data-dec]').forEach(b=>b.addEventListener('click',()=>{const i=parseInt(b.dataset.dec);DB.update(d=>{d.emergencyContacts.splice(i,1)});renderEmergencyList()}))
 }
 function bindProfileEvents(){
-  document.getElementById('btnBackMain').addEventListener('click',()=>{showView('viewTraining');renderTraining()});
-  document.getElementById('btnGoReports').addEventListener('click',()=>{showView('viewReports');renderReports()});
-  document.getElementById('btnGoSOS').addEventListener('click',()=>{showView('viewSOS');renderSOS()});
-  document.getElementById('apiKeyInp').addEventListener('change',function(){DB.update(d=>{d.settings.apiKey=this.value.trim()})});
-  document.getElementById('aiToggle').addEventListener('change',function(){DB.update(d=>{d.settings.aiEnabled=this.checked})});
-  document.getElementById('reduceMotionToggle').addEventListener('change',function(){DB.update(d=>{d.settings.reduceMotion=this.checked});document.body.classList.toggle('reduce-motion',this.checked)});
-  document.getElementById('commNick').addEventListener('change',function(){DB.update(d=>{d.profile.nick=this.value.trim()||'探索者'});document.getElementById('profileNick').textContent=this.value.trim()||'探索者'});
-  document.getElementById('petNameInp').addEventListener('change',function(){DB.update(d=>{d.profile.petName=this.value.trim()||'桥桥'})});
-  document.getElementById('petTypeSel').addEventListener('change',function(){const v=this.value;DB.update(d=>{d.profile.petType=v});updatePetAppearance(v)});
-  document.getElementById('navPos').addEventListener('change',function(){const v=this.value;DB.update(d=>{d.settings.navPos=v});applyNavPosition(v)});
-  document.getElementById('btnExport').addEventListener('click',()=>{const d=DB.load();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='echobridge_'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('数据已导出')});
-  document.getElementById('btnImport').addEventListener('click',()=>document.getElementById('importFile').click());
-  document.getElementById('importFile').addEventListener('change',function(){const f=this.files[0];if(!f)return;const r=new FileReader();r.onload=async e=>{try{const data=JSON.parse(e.target.result);const cf=await showConfirm('导入数据','导入将覆盖当前数据，确认？');if(cf){localStorage.setItem(DB._k,JSON.stringify(data));showToast('已导入，刷新中');setTimeout(()=>location.reload(),1200)}}catch(ex){showToast('文件格式错误')}};r.readAsText(f)});
-  document.getElementById('btnClear').addEventListener('click',async()=>{const cf=await showConfirm('清除所有数据','此操作不可恢复！建议先导出备份。确认清除？');if(cf){DB.clear();showToast('已清除，刷新中');setTimeout(()=>location.reload(),800)}});
-  document.getElementById('btnAddEC').addEventListener('click',()=>{const n=document.getElementById('ecName').value.trim();const p=document.getElementById('ecPhone').value.trim();if(!n||!p){showToast('请填写姓名和电话');return}DB.update(d=>{d.emergencyContacts.push({name:n,phone:p})});document.getElementById('ecName').value='';document.getElementById('ecPhone').value='';renderEmergencyList();showToast('已添加')});
-  document.getElementById('apiLink').addEventListener('click',()=>window.open('https://platform.deepseek.com/api_keys','_blank'));
-  document.getElementById('btnAbout').addEventListener('click',()=>showToast('共鸣之桥 EchoBridge v2.0 - 基于CBT的数字药物原型。设计理念：低压、静谧、安全。'));
-  document.querySelectorAll('.accordion-toggle').forEach(t=>t.addEventListener('click',function(){const id=this.dataset.accordion;const body=document.getElementById('acc'+id.charAt(0).toUpperCase()+id.slice(1));this.classList.toggle('open');body.classList.toggle('open')}));
+  const $=id=>document.getElementById(id);
+  const on=(id,ev,fn)=>{const el=$(id);if(el)el.addEventListener(ev,fn)};
+  on('btnBackMain','click',()=>{showView('viewTraining');renderTraining()});
+  on('btnGoReports','click',()=>{showView('viewReports');renderReports()});
+  on('btnGoSOS','click',()=>{showView('viewSOS');renderSOS()});
+  on('apiKeyInp','change',function(){DB.update(d=>{d.settings.apiKey=this.value.trim()})});
+  on('aiToggle','change',function(){DB.update(d=>{d.settings.aiEnabled=this.checked})});
+  on('reduceMotionToggle','change',function(){DB.update(d=>{d.settings.reduceMotion=this.checked});document.body.classList.toggle('reduce-motion',this.checked)});
+  on('commNick','change',function(){DB.update(d=>{d.profile.nick=this.value.trim()||'探索者'});const pn=$('profileNick');if(pn)pn.textContent=this.value.trim()||'探索者'});
+  on('petNameInp','change',function(){DB.update(d=>{d.profile.petName=this.value.trim()||'桥桥'})});
+  on('petTypeSel','change',function(){const v=this.value;DB.update(d=>{d.profile.petType=v});updatePetAppearance(v)});
+  on('navPos','change',function(){const v=this.value;DB.update(d=>{d.settings.navPos=v});applyNavPosition(v)});
+  on('btnExport','click',()=>{const d=DB.load();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='echobridge_'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('数据已导出')});
+  on('btnImport','click',()=>{const fi=$('importFile');if(fi)fi.click()});
+  on('importFile','change',function(){const f=this.files[0];if(!f)return;const r=new FileReader();r.onload=async e=>{try{const data=JSON.parse(e.target.result);const cf=await showConfirm('导入数据','导入将覆盖当前数据，确认？');if(cf){localStorage.setItem(DB._k,JSON.stringify(data));showToast('已导入，刷新中');setTimeout(()=>location.reload(),1200)}}catch(ex){showToast('文件格式错误')}};r.readAsText(f)});
+  on('btnClear','click',async()=>{const cf=await showConfirm('清除所有数据','此操作不可恢复！建议先导出备份。确认清除？');if(cf){DB.clear();showToast('已清除，刷新中');setTimeout(()=>location.reload(),800)}});
+  on('btnAddEC','click',()=>{const n=($('ecName')||{}).value||'';const p=($('ecPhone')||{}).value||'';if(!n.trim()||!p.trim()){showToast('请填写姓名和电话');return}DB.update(d=>{d.emergencyContacts.push({name:n.trim(),phone:p.trim()})});const en=$('ecName');const ep=$('ecPhone');if(en)en.value='';if(ep)ep.value='';renderEmergencyList();showToast('已添加')});
+  on('apiLink','click',()=>window.open('https://platform.deepseek.com/api_keys','_blank'));
+  on('btnAbout','click',()=>showToast('共鸣之桥 EchoBridge v2.0 - 基于CBT的数字药物原型。设计理念：低压、静谧、安全。'));
+  document.querySelectorAll('.accordion-toggle').forEach(t=>t.addEventListener('click',function(){const id=this.dataset.accordion;const body=$('acc'+id.charAt(0).toUpperCase()+id.slice(1));if(body){this.classList.toggle('open');body.classList.toggle('open')}}));
   // Avatar upload from profile
-  document.getElementById('profileAvatar').addEventListener('click',()=>document.getElementById('avatarFileInput').click())
+  on('profileAvatar','click',()=>{const fi=$('avatarFileInput');if(fi)fi.click()});
 }
 function updatePetAppearance(type){const body=document.getElementById('petBody');const ears=document.querySelectorAll('.pet-ear');const colors={dog:{body:'#D4B896',ear:'#C0A080'},cat:{body:'#C8B8A0',ear:'#A89880'},deer:{body:'#D4B896',ear:'#B89870'}};const c=colors[type]||colors.dog;body.style.background=c.body;ears.forEach(e=>e.style.background=c.ear)}
 
