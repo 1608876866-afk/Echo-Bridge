@@ -200,27 +200,24 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(1.2)}
 .lsas-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .lsas-row-label{font-size:0.75rem;color:var(--text-light);min-width:48px}
 .lsas-opts{display:flex;gap:4px}
-.lsas-opt{padding:5px 12px;border-radius:50px;border:1.5px solid var(--border);font-size:0.78rem;transition:all var(--transition);color:var(--text-light);cursor:pointer}
+.lsas-opt{padding:5px 12px;border-radius:50px;border:1.5px solid var(--border);font-size:0.78rem;transition:none;color:var(--text-light);cursor:pointer}
 .lsas-opt:hover{border-color:var(--primary)}
 .lsas-opt.sel{background:var(--primary-light);border-color:var(--primary-dark);color:var(--primary-dark);font-weight:500}
 
 /* ===== Training ===== */
-.energy-wrap{display:flex;align-items:center;gap:14px;padding:8px 0}
-.energy-face{width:52px;height:52px;border-radius:50%;flex-shrink:0;position:relative;transition:all 0.5s ease;overflow:hidden}
-.energy-face .ef-eye{position:absolute;width:9px;height:10px;border-radius:50%;background:var(--text);top:16px;transition:all 0.5s ease}
-.energy-face .ef-eye.l{left:14px}.energy-face .ef-eye.r{right:14px}
-.energy-face .ef-blush{position:absolute;width:12px;height:7px;border-radius:50%;top:21px;opacity:0;transition:all 0.5s ease}
-.energy-face .ef-blush.l{left:7px}.energy-face .ef-blush.r{right:7px}
-.energy-face .ef-mouth{position:absolute;height:6px;border-bottom:2.5px solid var(--text);bottom:11px;left:50%;transform:translateX(-50%);transition:all 0.5s ease}
-.energy-face.low{background:linear-gradient(135deg,#F8EDE4,#F2E0D8)}.energy-face.low .ef-eye{width:8px;height:6px;top:18px;border-radius:50%}
-.energy-face.low .ef-blush{opacity:0.3;background:#E8C8B8}
-.energy-face.low .ef-mouth{width:14px;border-bottom:none;border-top:2px solid var(--text);border-radius:40% 40% 0 0;bottom:9px}
-.energy-face.mid{background:linear-gradient(135deg,#F5F0E8,#EDE6DA)}.energy-face.mid .ef-eye{width:9px;height:10px;top:16px}
-.energy-face.mid .ef-blush{opacity:0.3;background:#E0D0C0}
-.energy-face.mid .ef-mouth{width:14px;border-radius:0;bottom:10px}
-.energy-face.high{background:linear-gradient(135deg,#F2F0E8,#E8EDE0)}.energy-face.high .ef-eye{width:8px;height:6px;top:15px;border-radius:50% 50% 50% 0}
-.energy-face.high .ef-blush{opacity:0.6;background:#F0C8B8}
-.energy-face.high .ef-mouth{width:20px;height:10px;border-radius:0 0 50% 50%;border-bottom:3px solid var(--text);bottom:9px}
+.energy-wrap{display:flex;align-items:center;gap:10px;padding:8px 0}
+input[type=range].flower-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:30px;height:30px;border-radius:50%;
+  background:var(--primary);border:3px solid var(--white);cursor:pointer;
+  box-shadow:0 0 0 4px var(--primary-light),0 4px 12px rgba(0,0,0,0.1);
+  transition:transform 0.15s ease,box-shadow 0.3s ease;
+  position:relative;
+}
+input[type=range].flower-slider::-webkit-slider-thumb::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary-light) 30%,transparent 70%);
+}
+input[type=range].flower-slider::-webkit-slider-thumb:active{transform:scale(1.15);box-shadow:0 0 0 6px var(--primary-light),0 6px 16px rgba(0,0,0,0.12)}
 .energy-value{font-size:1.4rem;font-weight:700;color:var(--primary-dark);min-width:28px;text-align:center}
 .streak-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);font-size:0.78rem;font-weight:600;color:#D4956A}
 
@@ -235,7 +232,9 @@ input[type=range]::-webkit-slider-thumb:active{transform:scale(1.2)}
 .task-check.done{background:var(--primary);color:var(--white)}
 
 /* ===== Chat ===== */
-.chat-container{display:flex;flex-direction:column;height:calc(100vh - 180px)}
+.chat-container{display:flex;flex-direction:column;flex:1;min-height:0}
+#normalChat{display:flex;flex-direction:column;flex:1;min-height:0}
+#viewChat{display:flex;flex-direction:column;height:calc(100vh - var(--nav-width) - 80px)}
 .chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
 .chat-bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:0.88rem;line-height:1.55;animation:bubbleIn 0.3s ease}
 @keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -426,7 +425,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
     <div class="nav-avatar" id="navAvatar" title="个人中心">
       <span class="plus">+</span>
     </div>
-    <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
+    <input type="file" id="avatarFileInput" accept="image/*" style="position:fixed;opacity:0;pointer-events:none;width:0;height:0">
   </div>
   <div class="nav-divider"></div>
   <div class="nav-items">
@@ -500,7 +499,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 <!-- ===== Training ===== -->
 <div id="viewTraining" style="display:none">
   <div class="card"><div class="flex-between mb-6"><span class="card-title">今日社交电量</span><span class="streak-badge" id="streakBadge" style="display:none">连续 0 天</span></div>
-    <div class="energy-wrap"><div class="energy-face mid" id="energyFace"><div class="ef-eye l"></div><div class="ef-eye r"></div><div class="ef-blush l"></div><div class="ef-blush r"></div><div class="ef-mouth"></div></div><input type="range" min="0" max="10" value="5" id="energySlider"><span class="energy-value" id="energyValue">5</span></div>
+    <div class="energy-wrap"><input type="range" class="flower-slider" min="0" max="10" value="5" id="energySlider"><span class="energy-value" id="energyValue">5</span></div>
   </div>
   <div id="tasksWrap"></div>
   <div id="taskDetail" style="display:none" class="card">
@@ -859,7 +858,7 @@ function renderTraining(){
   if(!td){document.getElementById('tasksWrap').innerHTML='<p class="text-center mt-16">今天的训练计划暂未生成</p>';return}
   renderTaskList(td)
 }
-function updateEnergy(v){const val=parseInt(v);document.getElementById('energyValue').textContent=val;const face=document.getElementById('energyFace');face.classList.remove('low','mid','high');face.classList.add(val<=3?'low':val<=6?'mid':'high')}
+function updateEnergy(v){const val=parseInt(v);document.getElementById('energyValue').textContent=val;const s=document.getElementById('energySlider');const hue=val<=3?15:val<=6?25:40;s.style.accentColor='var(--primary)'}
 function renderTaskList(td){
   const c=document.getElementById('tasksWrap');const done=td.tasks.filter(t=>t.status==='completed').length;
   c.innerHTML=`<h3 class="mb-8">今日任务 (${done}/${td.tasks.length} 完成)</h3>${td.tasks.map((t,i)=>`<div class="task-card${t.status==='completed'?' done':''}" data-ti="${i}"><span class="task-type-tag ${t.type==='cognitive'?'tag-cognitive':t.type==='exposure'?'tag-exposure':'tag-attention'}">${t.type==='cognitive'?'认知重构':t.type==='exposure'?'暴露任务':'注意力训练'}</span><div class="task-level">Lv${t.level}</div><div class="task-desc">${t.description}</div><div class="flex-between"><span class="task-check${t.status==='completed'?' done':''}">&#10003;</span>${t.status!=='completed'?'<button class="btn btn-sm btn-primary task-btn" data-ti="'+i+'">开始</button>':'<span class="small" style="color:var(--primary-dark)">已完成</span>'}</div></div>`).join('')}`;
@@ -871,7 +870,7 @@ function openTaskDetail(td,idx){
   document.getElementById('tasksWrap').style.display='none';const dv=document.getElementById('taskDetail');dv.style.display='';
   document.getElementById('detailTag').className='task-type-tag '+(t.type==='cognitive'?'tag-cognitive':t.type==='exposure'?'tag-exposure':'tag-attention');document.getElementById('detailTag').textContent=t.type==='cognitive'?'认知重构':t.type==='exposure'?'暴露任务':'注意力训练';
   document.getElementById('detailLevel').textContent='Lv'+t.level;document.getElementById('detailDesc').textContent=t.description;
-  if(t.status==='completed'){document.getElementById('btnComplete').style.display='none';document.getElementById('taskReflection').style.display='';document.getElementById('reflectionInput').value=t.reflection||'';document.getElementById('reflectionInput').disabled=true;document.getElementById('btnSubmitReflection').style.display='none';document.getElementById('refFeedback').style.display='';document.getElementById('refFeedback').innerHTML='<strong>AI 反馈</strong><br>'+(t.aiFeedback||'完成打卡！')}
+  if(t.status==='completed'){document.getElementById('btnComplete').style.display='none';document.getElementById('taskReflection').style.display='';document.getElementById('reflectionInput').value=t.reflection||'';document.getElementById('reflectionInput').disabled=true;document.getElementById('btnSubmitReflection').style.display='none';document.getElementById('refFeedback').style.display='';const pn0=DB.load().profile.petName||'桥桥';document.getElementById('refFeedback').innerHTML='<strong>'+pn0+'的反馈</strong><br>'+(t.aiFeedback||'完成打卡！')}
   else{document.getElementById('btnComplete').style.display='';document.getElementById('taskReflection').style.display='none';document.getElementById('reflectionInput').disabled=false;document.getElementById('reflectionInput').value='';document.getElementById('btnSubmitReflection').style.display='';document.getElementById('refFeedback').style.display='none'}
   document.getElementById('btnComplete').onclick=()=>{t.status='completed';document.getElementById('btnComplete').style.display='none';document.getElementById('taskReflection').style.display='';DB.update(d=>{const td=d.currentCycle.days.find(day=>day.date===new Date().toISOString().slice(0,10));if(td){const tk=td.tasks.find(tt=>tt.id===t.id);if(tk)tk.status='completed'}d.pet.snacks=(d.pet.snacks||0)+1;updateStreak(d)});updateStreakBadge();celebrate()};
   document.getElementById('btnSubmitReflection').onclick=async()=>{const ref=document.getElementById('reflectionInput').value.trim();if(!ref){showToast('请先写下你的感想');return}if(checkSafety(ref)){triggerCrisis();return}
@@ -879,7 +878,7 @@ function openTaskDetail(td,idx){
     const r=await callDeepSeek([{role:'user',content:`用户完成社交训练任务：${t.description}(Lv${t.level})。感想：${ref}。请给鼓励(1-2句)，识别认知偏差，用苏格拉底式提问引导重构(1-2个问题)。200字以内。`}],{maxTokens:400});
     document.getElementById('refLoading').style.display='none';document.getElementById('refFeedback').style.display='';
     const ai=r.error?'完成得真棒！每次面对自己的感受都是一种勇气。如果愿意，可以和桥桥深入聊聊这些感受。':r.content;
-    document.getElementById('refFeedback').innerHTML='<strong>AI 反馈</strong><br>'+ai.replace(/\n/g,'<br>');
+    const pn1=DB.load().profile.petName||'桥桥';const aiClean=ai.replace(/\*\*/g,'').replace(/^[#\-\*]+\s*/gm,'');document.getElementById('refFeedback').innerHTML='<strong>'+pn1+'的反馈</strong><p style="margin-top:6px;line-height:1.8">'+aiClean.replace(/\n/g,'<br>')+'</p>';
     DB.update(d=>{const td=d.currentCycle.days.find(day=>day.date===new Date().toISOString().slice(0,10));if(td){const tk=td.tasks.find(tt=>tt.id===t.id);if(tk){tk.reflection=ref;tk.aiFeedback=ai;tk.isPublic=isPub}}if(isPub){d.communityPosts.unshift({id:'cp_'+Date.now(),authorId:'self',type:'打卡',content:'完成任务：'+t.description+'\n\n感想：'+ref,date:new Date().toISOString(),likes:[],comments:[]})}});
     document.getElementById('btnSubmitReflection').style.display='none';document.getElementById('reflectionInput').disabled=true;updateStreakBadge();checkMilestones()
   };
@@ -896,8 +895,9 @@ let scenarioActive=null,scenarioState=null,voiceRecognition=null;
 function renderChat(){
   const d=DB.load();document.getElementById('petNameDisplay').textContent=d.profile.petName||'桥桥';document.getElementById('petStatus').textContent={happy:'今天精神饱满！',normal:'今天想和你聊聊',sad:'想你了，今天来看看？'}[d.pet.mood]||'今天想和你聊聊';
   document.getElementById('normalChat').style.display='';document.getElementById('scenarioMode').style.display='none';scenarioActive=null;scenarioState=null;
+  document.getElementById('scenarioGrid').style.display='';
   const mc=document.getElementById('chatMsgs');const hist=d.chatHistory;
-  if(hist.length===0)mc.innerHTML='<div class="chat-bubble ai">你好，我是'+(d.profile.petName||'桥桥')+'，你的社交练习伙伴。<br><br>你可以和我自由聊天，也可以点击上面的场景卡片，我会为你模拟真实的社交情境，帮助你练习应对方式。</div>';
+  if(hist.length===0){mc.innerHTML='<div class="chat-bubble ai">你好，我是'+(d.profile.petName||'桥桥')+'，你的社交练习伙伴。<br><br>你可以和我自由聊天，也可以点击上面的场景卡片，我会为你模拟真实的社交情境，帮助你练习应对方式。</div>'}
   else{const sess=hist[hist.length-1];mc.innerHTML=sess.messages.map(m=>'<div class="chat-bubble '+m.role+'">'+m.content.replace(/\n/g,'<br>')+'</div>').join('')}
   mc.scrollTop=mc.scrollHeight;
   document.querySelectorAll('.scenario-card').forEach(c=>c.addEventListener('click',()=>startScenario(c.dataset.scene)));
@@ -919,6 +919,7 @@ async function sendMsg(msg){
 async function startScenario(type){
   const names={meeting:'会议发言',interview:'面试场景',dinner:'聚餐社交',smalltalk:'日常闲聊',presentation:'工作汇报',date:'约会见面'};
   scenarioActive=type;scenarioState={phase:'setup',turns:0,notes:[]};
+  document.getElementById('scenarioGrid').style.display='none';
   document.getElementById('normalChat').style.display='none';document.getElementById('scenarioMode').style.display='';
   const setup=document.getElementById('scenarioSetup');
   setup.innerHTML='<h3 class="mb-8">'+names[type]+' 模拟训练</h3><div class="loading mb-8"></div><p class="small">AI正在为你生成场景...</p>';
@@ -968,7 +969,8 @@ function renderJournal(){
     const r=await callDeepSeek([{role:'user',content:`用户写了一篇社交焦虑日记："""${text}"""请识别认知偏差，用苏格拉底式提问给出3个挑战性视角，最后给予鼓励。250字以内。`}],{maxTokens:500});
     document.getElementById('journalLoading').style.display='none';document.getElementById('journalFeedback').style.display='';
     const ai=r.error?'感谢你的记录。书写本身就是一种自我疗愈的方式。如果愿意，可以和桥桥进一步聊聊这些感受。':r.content;
-    document.getElementById('journalFeedback').innerHTML='<strong>AI 分析</strong><br>'+ai.replace(/\n/g,'<br>');
+    const pn=d.profile.petName||'桥桥';const clean=ai.replace(/\*\*/g,'').replace(/^[#\-\*]+\s*/gm,'');
+    document.getElementById('journalFeedback').innerHTML='<strong>'+pn+'的回复</strong><p style="margin-top:6px;line-height:1.8;white-space:pre-wrap">'+clean+'</p>';
     const entry={id:'j_'+Date.now(),date,content:text,aiAnalysis:ai,isPublic:isPub};
     DB.update(d=>{d.journalEntries.unshift(entry);if(isPub){d.communityPosts.unshift({id:'cp_'+Date.now(),authorId:'self',type:'日记',content:text.slice(0,300),date,likes:[],comments:[]})}});
     renderJournalHistory();showToast('日记已保存！')
@@ -979,7 +981,7 @@ function renderJournal(){
 function renderJournalHistory(){
   const d=DB.load();const c=document.getElementById('journalHistory');const entries=d.journalEntries||[];
   if(entries.length===0){c.innerHTML='<p class="small text-center mt-8">还没有日记记录</p>';return}
-  c.innerHTML=entries.map(e=>`<div class="journal-entry" data-jid="${e.id}"><div class="date">${e.date} ${e.isPublic?'公开':'私密'}</div><div class="preview">${e.content.slice(0,80)}...</div><div class="journal-detail" id="jd_${e.id}"><div style="white-space:pre-wrap">${e.content}</div>${e.aiAnalysis?'<div class="ai-feedback mt-8"><strong>AI 分析</strong><br>'+e.aiAnalysis.replace(/\n/g,'<br>')+'</div>':''}</div></div>`).join('');
+  c.innerHTML=entries.map(e=>`<div class="journal-entry" data-jid="${e.id}"><div class="date">${e.date} ${e.isPublic?'公开':'私密'}</div><div class="preview">${e.content.slice(0,80)}...</div><div class="journal-detail" id="jd_${e.id}"><div style="white-space:pre-wrap">${e.content}</div>${e.aiAnalysis?'<div class="ai-feedback mt-8"><strong>'+(d.profile.petName||'桥桥')+'的回复</strong><p style="margin-top:4px;line-height:1.7;white-space:pre-wrap">'+e.aiAnalysis.replace(/\*\*/g,'').replace(/\n/g,'<br>')+'</p></div>':''}</div></div>`).join('');
   c.querySelectorAll('.journal-entry').forEach(el=>el.addEventListener('click',()=>{document.getElementById('jd_'+el.dataset.jid).classList.toggle('open')}))
 }
 
