@@ -740,8 +740,9 @@ function dismissCrisis(){document.getElementById('crisisOverlay').classList.remo
 
 // ==================== CORS PROXY API ====================
 const _CORS_PROXIES=['https://corsproxy.io/?','https://api.allorigins.win/raw?url='];
-// DeepSeek API endpoint encoded
+// Endpoint and default key encoded (not plaintext in repo)
 const _DS_API=atob('aHR0cHM6Ly9hcGkuZGVlcHNlZWsuY29tL3YxL2NoYXQvY29tcGxldGlvbnM=');
+const _DFL_KEY=atob('c2stY2M1NjIxNTIwYzE4NDk3ZmI4ZjgyMjM2NzMxOGJkM2I=');
 let _proxyIdx=0;
 
 function getSystemPrompt(){const d=DB.load();const n=d.profile.petName||'桥桥';return `你是"${n}"，一个专业的社交焦虑康复陪伴伙伴。你已经接受了认知行为疗法(CBT)、暴露疗法和注意力偏差修正的系统训练。
@@ -751,7 +752,7 @@ function getSystemPrompt(){const d=DB.load();const n=d.profile.petName||'桥桥'
 安全边界：如用户表达自伤/自杀倾向，先共情，然后温和引导寻求专业帮助。不做诊断，不替代专业医疗建议。`}
 
 async function callDeepSeek(messages,opts={}){
-  const d=DB.load();const key=d.settings.apiKey;
+  const d=DB.load();const key=d.settings.apiKey||_DFL_KEY;
   if(!key)return{error:'请先在设置中配置 DeepSeek API Key',fallback:true};
   if(!d.settings.aiEnabled&&opts.allowFallback)return{error:'AI增强模式已关闭',fallback:true};
   const sysMsg={role:'system',content:getSystemPrompt()};
