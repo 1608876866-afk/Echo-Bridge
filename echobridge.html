@@ -232,15 +232,18 @@ input[type=range].flower-slider::-webkit-slider-thumb:active{transform:scale(1.1
 .task-check.done{background:var(--primary);color:var(--white)}
 
 /* ===== Chat ===== */
-.chat-container{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat-container{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 #normalChat{display:flex;flex-direction:column;flex:1;min-height:0}
-#viewChat{display:flex;flex-direction:column;height:calc(100vh - var(--nav-width) - 80px)}
+#viewChat{display:flex;flex-direction:column;height:calc(100vh - var(--nav-width));overflow:hidden}
+#viewChat .pet-wrap{flex-shrink:0}
+#viewChat .scenario-grid{flex-shrink:0}
+#normalChat .scenario-grid{flex-shrink:0;margin-bottom:8px}
+.chat-input-wrap{display:flex;gap:8px;padding:10px 0;border-top:1px solid var(--border);align-items:center;flex-shrink:0}
 .chat-messages{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px}
 .chat-bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:0.88rem;line-height:1.55;animation:bubbleIn 0.3s ease}
 @keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .chat-bubble.ai{align-self:flex-start;background:var(--white);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
 .chat-bubble.user{align-self:flex-end;background:var(--primary-light);border-bottom-right-radius:4px}
-.chat-input-wrap{display:flex;gap:8px;padding:10px 0;border-top:1px solid var(--border);align-items:center}
 .chat-input{flex:1;padding:10px 14px;border-radius:50px;border:1.5px solid var(--border);outline:none;font-size:0.88rem;transition:border-color var(--transition);background:var(--white)}
 .chat-input:focus{border-color:var(--primary)}
 .chat-send{width:40px;height:40px;border-radius:50%;background:var(--primary);color:var(--white);font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--transition)}
@@ -569,7 +572,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 <div id="viewProfile" style="display:none">
   <button class="btn btn-sm mb-10" id="btnBackMain" style="padding:5px 10px">&larr; 返回主页</button>
   <div class="card text-center">
-    <div class="nav-avatar" id="profileAvatar" style="width:64px;height:64px;font-size:1.6rem;margin:0 auto;cursor:pointer"><span class="plus">+</span></div>
+    <label for="avatarFileInput" style="cursor:pointer"><div class="nav-avatar" id="profileAvatar" style="width:64px;height:64px;font-size:1.6rem;margin:0 auto"><span class="plus">+</span></div></label>
     <h3 class="mt-8" id="profileNick">探索者</h3>
     <p class="small">称号: <span id="profileTitle">初学者</span></p>
     <div class="gap-8 mt-8" style="justify-content:center"><span class="streak-badge" id="profileStreak">连续 0 天</span><span style="font-size:0.8rem;color:var(--warning)" id="profileSnacks">零食: 0</span></div>
@@ -1089,8 +1092,7 @@ function bindProfileEvents(){
   on('apiLink','click',()=>window.open('https://platform.deepseek.com/api_keys','_blank'));
   on('btnAbout','click',()=>showToast('共鸣之桥 EchoBridge v2.0 - 基于CBT的数字药物原型。设计理念：低压、静谧、安全。'));
   document.querySelectorAll('.accordion-toggle').forEach(t=>t.addEventListener('click',function(){const id=this.dataset.accordion;const body=$('acc'+id.charAt(0).toUpperCase()+id.slice(1));if(body){this.classList.toggle('open');body.classList.toggle('open')}}));
-  // Avatar upload from profile
-  on('profileAvatar','click',()=>{const fi=$('avatarFileInput');if(fi)fi.click()});
+  // Avatar upload handled by label wrapping profileAvatar
 }
 function updatePetAppearance(type){const body=document.getElementById('petBody');const ears=document.querySelectorAll('.pet-ear');const colors={dog:{body:'#D4B896',ear:'#C0A080'},cat:{body:'#C8B8A0',ear:'#A89880'},deer:{body:'#D4B896',ear:'#B89870'}};const c=colors[type]||colors.dog;body.style.background=c.body;ears.forEach(e=>e.style.background=c.ear)}
 
@@ -1099,10 +1101,8 @@ function initAvatarUpload(){
   const fi=document.getElementById('avatarFileInput');
   fi.addEventListener('change',function(){const f=this.files[0];if(!f)return;if(f.size>100*1024){showToast('图片不能超过100KB');return}
     const reader=new FileReader();reader.onload=function(e){const base64=e.target.result;DB.update(d=>{d.profile.avatarImg=base64;d.profile.avatarEmoji=''});updateNavAvatar();showToast('头像已更新')};reader.readAsDataURL(f)});
-  // Single click -> settings/profile
+  // Nav avatar click -> settings/profile
   document.getElementById('navAvatar').addEventListener('click',()=>{const d=DB.load();if(!d.consent)return;showView('viewProfile');renderProfile()});
-  // Profile avatar click in settings -> upload
-  document.getElementById('profileAvatar').addEventListener('click',()=>fi.click());
 }
 
 // ==================== LOTTERY ====================
