@@ -235,7 +235,6 @@ input[type=range].flower-slider::-webkit-slider-thumb:active{transform:scale(1.1
 .chat-container{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 #normalChat{display:flex;flex-direction:column;flex:1;min-height:0}
 #viewChat{display:flex;flex-direction:column;height:calc(100vh - var(--nav-width));overflow:hidden}
-#viewChat .pet-wrap{flex-shrink:0}
 #viewChat .scenario-grid{flex-shrink:0}
 #normalChat .scenario-grid{flex-shrink:0;margin-bottom:8px}
 .chat-input-wrap{display:flex;gap:8px;padding:10px 0;border-top:1px solid var(--border);align-items:center;flex-shrink:0}
@@ -275,19 +274,6 @@ input[type=range].flower-slider::-webkit-slider-thumb:active{transform:scale(1.1
 .voice-btn.active{background:var(--warning);color:var(--white);animation:pulse 1s infinite}
 
 /* ===== Pet ===== */
-.pet-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 12px}
-.pet-figure{position:relative;width:80px;height:80px}
-.pet-body{width:64px;height:64px;background:var(--nav-chat);border-radius:50%;position:absolute;bottom:0;left:8px;transition:all var(--spring)}
-.pet-body.happy{animation:petBounce 0.5s ease}
-@keyframes petBounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}50%{transform:translateY(0)}70%{transform:translateY(-6px)}}
-.pet-ear{width:20px;height:26px;background:var(--warning-light);border-radius:50% 50% 20% 20%;position:absolute;top:-6px}
-.pet-ear.l{left:12px;transform:rotate(-15deg)}
-.pet-ear.r{right:12px;transform:rotate(15deg)}
-.pet-face{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:42px}
-.pet-eye{width:7px;height:8px;background:var(--text);border-radius:50%;position:absolute;top:0}
-.pet-eye.l{left:8px}.pet-eye.r{right:8px}
-.pet-nose{width:10px;height:7px;background:#5A3A2A;border-radius:50%;margin:10px auto 0}
-.pet-mouth{width:16px;height:7px;border-bottom:2px solid #5A3A2A;border-radius:0 0 50% 50%;margin:2px auto 0}
 .pet-name{font-weight:600;font-size:0.9rem;margin-top:4px}
 .pet-status{font-size:0.75rem;color:var(--text-light)}
 
@@ -424,12 +410,6 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 <div id="app">
 <!-- Left Navigation -->
 <nav class="left-nav" id="leftNav">
-  <div class="nav-avatar-wrap">
-    <div class="nav-avatar" id="navAvatar" title="个人中心">
-      <span class="plus">+</span>
-    </div>
-    <input type="file" id="avatarFileInput" accept="image/*" style="position:fixed;opacity:0;pointer-events:none;width:0;height:0">
-  </div>
   <div class="nav-divider"></div>
   <div class="nav-items">
     <button class="nav-item active" data-view="training"><span class="nav-dot"></span><span class="nav-label">每日训练</span></button>
@@ -522,7 +502,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 
 <!-- ===== AI Chat ===== -->
 <div id="viewChat" style="display:none">
-  <div class="pet-wrap"><div class="pet-figure"><div class="pet-ear l"></div><div class="pet-ear r"></div><div class="pet-body" id="petBody"><div class="pet-face"><div class="pet-eye l"></div><div class="pet-eye r"></div><div class="pet-nose"></div><div class="pet-mouth" id="petMouth"></div></div></div></div><div class="pet-name" id="petNameDisplay">桥桥</div><div class="pet-status" id="petStatus">今天想和你聊聊</div></div>
+  <div style="text-align:center;padding:8px 0"><div class="pet-name" id="petNameDisplay" style="font-size:1.1rem">桥桥</div><div class="pet-status" id="petStatus" style="font-size:0.8rem">今天想和你聊聊</div></div>
   <div id="scenarioMode" style="display:none">
     <div class="scenario-setup" id="scenarioSetup"></div>
   </div>
@@ -572,8 +552,7 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
 <div id="viewProfile" style="display:none">
   <button class="btn btn-sm mb-10" id="btnBackMain" style="padding:5px 10px">&larr; 返回主页</button>
   <div class="card text-center">
-    <label for="avatarFileInput" style="cursor:pointer"><div class="nav-avatar" id="profileAvatar" style="width:64px;height:64px;font-size:1.6rem;margin:0 auto"><span class="plus">+</span></div></label>
-    <h3 class="mt-8" id="profileNick">探索者</h3>
+    <h3 class="mt-2" id="profileNick">探索者</h3>
     <p class="small">称号: <span id="profileTitle">初学者</span></p>
     <div class="gap-8 mt-8" style="justify-content:center"><span class="streak-badge" id="profileStreak">连续 0 天</span><span style="font-size:0.8rem;color:var(--warning)" id="profileSnacks">零食: 0</span></div>
   </div>
@@ -587,17 +566,12 @@ body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after{an
       <div class="settings-item"><span class="settings-label">减少动效</span><label class="toggle"><input type="checkbox" id="reduceMotionToggle"><span class="toggle-slider"></span></label></div>
       <div class="settings-item"><span class="settings-label">社区昵称</span><input type="text" id="commNick" value="探索者" style="padding:5px 10px;border-radius:var(--radius-xs);border:1.5px solid var(--border);width:120px;text-align:right"></div>
       <div class="settings-item"><span class="settings-label">AI伙伴名字</span><input type="text" id="petNameInp" value="桥桥" style="padding:5px 10px;border-radius:var(--radius-xs);border:1.5px solid var(--border);width:120px;text-align:right"></div>
-      <div class="settings-item"><span class="settings-label">AI伙伴形态</span><select id="petTypeSel" style="padding:5px 10px;border-radius:var(--radius-xs);border:1.5px solid var(--border)"><option value="dog">柴犬</option><option value="cat">猫咪</option><option value="deer">小鹿</option></select></div>
     </div>
   </div>
 
-  <div class="settings-group"><div class="accordion-toggle" data-accordion="api">API 与数据<span class="arrow">&#9660;</span></div>
-    <div class="accordion-body" id="accAPI">
-      <div class="settings-item"><span class="settings-label">DeepSeek API Key</span></div>
-      <input type="password" id="apiKeyInp" placeholder="sk-..." style="width:100%;padding:9px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border);margin-top:4px">
-      <p class="small mt-4" style="cursor:pointer;color:var(--primary-dark);text-decoration:underline" id="apiLink">如何获取 DeepSeek API Key？</p>
-      <div class="settings-item mt-6"><span class="settings-label">AI 增强模式</span><label class="toggle"><input type="checkbox" id="aiToggle" checked><span class="toggle-slider"></span></label></div>
-      <button class="btn btn-secondary btn-block mt-8 mb-4" id="btnExport">导出数据 (JSON)</button>
+  <div class="settings-group"><div class="accordion-toggle" data-accordion="data">数据管理<span class="arrow">&#9660;</span></div>
+    <div class="accordion-body" id="accData">
+      <button class="btn btn-secondary btn-block mb-4" id="btnExport">导出数据 (JSON)</button>
       <button class="btn btn-secondary btn-block mb-4" id="btnImport">导入数据 (JSON)</button>
       <input type="file" id="importFile" accept=".json" style="display:none">
       <button class="btn btn-warning btn-block" id="btnClear">清除所有数据</button>
@@ -713,13 +687,8 @@ function showView(vid){
   currentView=vid;
   const navMapping={viewTraining:'training',viewChat:'chat',viewCommunity:'community',viewJournal:'journal'};
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.toggle('active',i.dataset.view===navMapping[vid]));
-  updateNavAvatar();
 }
-function updateNavAvatar(){const d=DB.load();const a=document.getElementById('navAvatar');const plus=a.querySelector('.plus');
-  if(d.profile.avatarImg){a.classList.add('has-image');a.innerHTML='';const img=document.createElement('img');img.src=d.profile.avatarImg;a.appendChild(img);a.appendChild(plus||document.createElement('span'))}
-  else{a.classList.remove('has-image');a.innerHTML='<span class="plus">+</span>';if(d.profile.avatarEmoji){a.innerHTML=d.profile.avatarEmoji;a.style.fontSize='1.4rem'}}
-  const pa=document.getElementById('profileAvatar');if(pa){if(d.profile.avatarImg){pa.classList.add('has-image');pa.innerHTML='';const pimg=document.createElement('img');pimg.src=d.profile.avatarImg;pa.appendChild(pimg)}else{pa.classList.remove('has-image');pa.innerHTML='<span class="plus">+</span>';if(d.profile.avatarEmoji){pa.innerHTML=d.profile.avatarEmoji}}}
-}
+function updateNavAvatar(){/* avatar removed */}
 
 // ==================== TOAST ====================
 let _toastTimer;
@@ -1050,10 +1019,9 @@ function renderSOSContacts(){const d=DB.load();const ec=d.emergencyContacts||[];
 // ==================== PROFILE & SETTINGS ====================
 let _profileInited=false;
 function renderProfile(){
-  const d=DB.load();document.getElementById('profileNick').textContent=d.profile.nick;document.getElementById('profileTitle').textContent=d.profile.title;updateNavAvatar();
-  document.getElementById('apiKeyInp').value=d.settings.apiKey||'';document.getElementById('aiToggle').checked=d.settings.aiEnabled;
+  const d=DB.load();document.getElementById('profileNick').textContent=d.profile.nick;document.getElementById('profileTitle').textContent=d.profile.title;
   document.getElementById('reduceMotionToggle').checked=d.settings.reduceMotion;document.getElementById('commNick').value=d.profile.nick;
-  document.getElementById('petNameInp').value=d.profile.petName;document.getElementById('petTypeSel').value=d.profile.petType;
+  document.getElementById('petNameInp').value=d.profile.petName;
   document.getElementById('navPos').value=d.settings.navPos||'left';
   if(d.settings.reduceMotion)document.body.classList.add('reduce-motion');else document.body.classList.remove('reduce-motion');
   document.getElementById('profileStreak').textContent='连续 '+d.streak.current+' 天';document.getElementById('profileSnacks').textContent='零食: '+(d.pet.snacks||0);
@@ -1077,32 +1045,17 @@ function bindProfileEvents(){
   on('btnBackMain','click',()=>{showView('viewTraining');renderTraining()});
   on('btnGoReports','click',()=>{showView('viewReports');renderReports()});
   on('btnGoSOS','click',()=>{showView('viewSOS');renderSOS()});
-  on('apiKeyInp','change',function(){DB.update(d=>{d.settings.apiKey=this.value.trim()})});
-  on('aiToggle','change',function(){DB.update(d=>{d.settings.aiEnabled=this.checked})});
   on('reduceMotionToggle','change',function(){DB.update(d=>{d.settings.reduceMotion=this.checked});document.body.classList.toggle('reduce-motion',this.checked)});
   on('commNick','change',function(){DB.update(d=>{d.profile.nick=this.value.trim()||'探索者'});const pn=$('profileNick');if(pn)pn.textContent=this.value.trim()||'探索者'});
   on('petNameInp','change',function(){DB.update(d=>{d.profile.petName=this.value.trim()||'桥桥'})});
-  on('petTypeSel','change',function(){const v=this.value;DB.update(d=>{d.profile.petType=v});updatePetAppearance(v)});
   on('navPos','change',function(){const v=this.value;DB.update(d=>{d.settings.navPos=v});applyNavPosition(v)});
   on('btnExport','click',()=>{const d=DB.load();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='echobridge_'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('数据已导出')});
   on('btnImport','click',()=>{const fi=$('importFile');if(fi)fi.click()});
   on('importFile','change',function(){const f=this.files[0];if(!f)return;const r=new FileReader();r.onload=async e=>{try{const data=JSON.parse(e.target.result);const cf=await showConfirm('导入数据','导入将覆盖当前数据，确认？');if(cf){localStorage.setItem(DB._k,JSON.stringify(data));showToast('已导入，刷新中');setTimeout(()=>location.reload(),1200)}}catch(ex){showToast('文件格式错误')}};r.readAsText(f)});
   on('btnClear','click',async()=>{const cf=await showConfirm('清除所有数据','此操作不可恢复！建议先导出备份。确认清除？');if(cf){DB.clear();showToast('已清除，刷新中');setTimeout(()=>location.reload(),800)}});
   on('btnAddEC','click',()=>{const n=($('ecName')||{}).value||'';const p=($('ecPhone')||{}).value||'';if(!n.trim()||!p.trim()){showToast('请填写姓名和电话');return}DB.update(d=>{d.emergencyContacts.push({name:n.trim(),phone:p.trim()})});const en=$('ecName');const ep=$('ecPhone');if(en)en.value='';if(ep)ep.value='';renderEmergencyList();showToast('已添加')});
-  on('apiLink','click',()=>window.open('https://platform.deepseek.com/api_keys','_blank'));
   on('btnAbout','click',()=>showToast('共鸣之桥 EchoBridge v2.0 - 基于CBT的数字药物原型。设计理念：低压、静谧、安全。'));
   document.querySelectorAll('.accordion-toggle').forEach(t=>t.addEventListener('click',function(){const id=this.dataset.accordion;const body=$('acc'+id.charAt(0).toUpperCase()+id.slice(1));if(body){this.classList.toggle('open');body.classList.toggle('open')}}));
-  // Avatar upload handled by label wrapping profileAvatar
-}
-function updatePetAppearance(type){const body=document.getElementById('petBody');const ears=document.querySelectorAll('.pet-ear');const colors={dog:{body:'#D4B896',ear:'#C0A080'},cat:{body:'#C8B8A0',ear:'#A89880'},deer:{body:'#D4B896',ear:'#B89870'}};const c=colors[type]||colors.dog;body.style.background=c.body;ears.forEach(e=>e.style.background=c.ear)}
-
-// ==================== AVATAR UPLOAD ====================
-function initAvatarUpload(){
-  const fi=document.getElementById('avatarFileInput');
-  fi.addEventListener('change',function(){const f=this.files[0];if(!f)return;if(f.size>100*1024){showToast('图片不能超过100KB');return}
-    const reader=new FileReader();reader.onload=function(e){const base64=e.target.result;DB.update(d=>{d.profile.avatarImg=base64;d.profile.avatarEmoji=''});updateNavAvatar();showToast('头像已更新')};reader.readAsDataURL(f)});
-  // Nav avatar click -> settings/profile
-  document.getElementById('navAvatar').addEventListener('click',()=>{const d=DB.load();if(!d.consent)return;showView('viewProfile');renderProfile()});
 }
 
 // ==================== LOTTERY ====================
@@ -1146,14 +1099,13 @@ function setupGlobalEvents(){
   document.getElementById('btnCrisisDismiss').addEventListener('click',dismissCrisis);
   document.getElementById('btnCrisisChat').addEventListener('click',()=>{dismissCrisis();showView('viewChat');renderChat()});
   // Safety monitoring
-  document.addEventListener('input',function(e){if((e.target.tagName==='TEXTAREA'||(e.target.tagName==='INPUT'&&e.target.type==='text'))&&e.target.id!=='apiKeyInp'&&e.target.id!=='ecName'&&e.target.id!=='ecPhone'){if(checkSafety(e.target.value)){triggerCrisis();e.target.value=''}}});
+  document.addEventListener('input',function(e){if((e.target.tagName==='TEXTAREA'||(e.target.tagName==='INPUT'&&e.target.type==='text'))&&e.target.id!=='ecName'&&e.target.id!=='ecPhone'){if(checkSafety(e.target.value)){triggerCrisis();e.target.value=''}}});
 }
 
 // ==================== INIT ====================
 function init(){
   const d=DB.load();
-  initTheme();initNavPos();initAvatarUpload();setupGlobalEvents();
-  updatePetAppearance(d.profile.petType||'dog');
+  initTheme();initNavPos();setupGlobalEvents();
   // Pet mood
   const today=new Date().toISOString().slice(0,10);if(d.streak.lastDate){const days=Math.floor((Date.now()-new Date(d.streak.lastDate).getTime())/86400000);DB.update(d=>{d.pet.mood=days>=3?'sad':days>=1?'normal':'happy'})}
   // Welcome
